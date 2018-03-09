@@ -1,4 +1,6 @@
 const sql = require('./connection')
+const researchConfig = require('./config/research-config')
+const randomInt = require('./functions/random-int')
 
 module.exports = function () {
   sql.query(`
@@ -28,8 +30,36 @@ module.exports = function () {
     WHERE RE.planet_id = CF.planet_id AND RE.status = 'IN_PROGRESS';
   `)
 
+  var affectInsertQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '
   sql.query("SELECT * FROM research WHERE status = 'IN_PROGRESS' AND percent >= 100")
   .on('result', function(research) {
-    console.log('---------------   Need to create research affects and insert them -----------');
+    let effects = []
+    for (let i = 0; i < researchConfig.effectsPerResearch; i++) {
+      effects.push({
+        id: research.research_id,
+        type: researchConfig.researchEffects[randomInt(0, researchConfig.researchEffects.length)],
+        amount: Math.random() * researchConfig.effectStrength
+      })
+    }
+
+    for (let i = 0; i < researchConfig.sideEffectsPerResearch; i++) {
+      effects.push({
+        id: research.research_id,
+        type: researchConfig.researchEffects[randomInt(0, researchConfig.researchEffects.length)],
+        amount: -Math.random() * researchConfig.effectStrength
+      })
+    }
+
+    for (var effect of effects) {
+      affectInsertQuery += '('
+      affectInsertQuery += effect.id + ', "' + effect.type + '", ' + effect.amount
+      affectInsertQuery += '),'
+    }
+  })
+  .on('end', function() {
+    affectInsertQuery = affectInsertQuery.substring(0, affectInsertQuery.length - 1)
+    if (affectInsertQuery.length > 62) {
+      sql.query(affectInsertQuery)
+    }
   })
 }

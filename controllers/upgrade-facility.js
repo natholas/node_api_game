@@ -1,5 +1,5 @@
 const sql = require('../connection')
-const config = require('../config')
+const resourceConfig = require('../config/resource-config')
 
 module.exports = function (req, res) {
   var rows = []
@@ -14,8 +14,8 @@ module.exports = function (req, res) {
     let currentLevel = result[req.body.type + '_level']
     let level = currentLevel + 1
 
-    let metalNeeded = config.baseResourceNeeds[req.body.type].metal * level * level * level
-    let mineralNeeded = config.baseResourceNeeds[req.body.type].mineral * level * level * level
+    let metalNeeded = resourceConfig.baseResourceNeeds[req.body.type].metal * level * level * level
+    let mineralNeeded = resourceConfig.baseResourceNeeds[req.body.type].mineral * level * level * level
 
     if (metalNeeded > result.metal_storage || mineralNeeded > result.mineral_storage) {
       return res({ error: 'NOT_ENOUGH_RESOURCES', metalNeeded: metalNeeded, mineralNeeded: mineralNeeded })

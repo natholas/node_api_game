@@ -1,5 +1,5 @@
 const env = require('./env')
-const config = require('./config')
+const config = require('./config/server-config')
 const sql = require('./connection')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')

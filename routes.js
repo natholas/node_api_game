@@ -5,4 +5,5 @@ module.exports = [
   'get-my-celestials',
   'upgrade-facility',
   'start-research',
+  'create-blueprint',
 ]

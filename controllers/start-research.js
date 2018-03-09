@@ -1,5 +1,4 @@
 const sql = require('../connection')
-const config = require('../config')
 
 module.exports = function (req, res) {
   var rows = []

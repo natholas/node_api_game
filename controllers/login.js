@@ -1,6 +1,6 @@
 const sql = require('../connection')
 const env = require('../env')
-const config = require('../config')
+const config = require('../config/server-config')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 

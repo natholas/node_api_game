@@ -1,7 +1,4 @@
 module.exports = {
-  jwtExperation: 60 * 60 * 24,
-  zoom: 50,
-  tickInterval: 5000,
   baseResourceNeeds: {
     metal: {
       metal: 15,
