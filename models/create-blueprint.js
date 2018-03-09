@@ -4,7 +4,7 @@ module.exports = {
       type: 'string'
     },
     type: {
-      enum: ['corvette', 'cruiser', 'frigate', 'battle-ship']
+      enum: ['corvette', 'cruiser', 'frigate', 'battleShip']
     },
     name: {
       type: 'string'
@@ -18,5 +18,5 @@ module.exports = {
       }
     }
   },
-  required: ['token', 'celestialId', 'researchIds']
+  required: ['token', 'type', 'name','researchIds']
 }

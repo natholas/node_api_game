@@ -1,6 +1,6 @@
 module.exports = {
-  researchEffects: ['SHIP_SPEED', 'SHIP_HEALTH', 'SHIP_DAMAGE'],
+  researchEffects: ['speed', 'health', 'damage'],
   effectsPerResearch: 1,
   sideEffectsPerResearch: 2,
-  effectStrength: 10
+  effectStrength: 3
 }

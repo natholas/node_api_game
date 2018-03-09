@@ -38,7 +38,7 @@ module.exports = function () {
       effects.push({
         id: research.research_id,
         type: researchConfig.researchEffects[randomInt(0, researchConfig.researchEffects.length)],
-        amount: Math.random() * researchConfig.effectStrength
+        amount: 1 + (Math.random() * researchConfig.effectStrength)
       })
     }
 
@@ -46,7 +46,7 @@ module.exports = function () {
       effects.push({
         id: research.research_id,
         type: researchConfig.researchEffects[randomInt(0, researchConfig.researchEffects.length)],
-        amount: -Math.random() * researchConfig.effectStrength
+        amount: 1 / (Math.random() * researchConfig.effectStrength)
       })
     }
 
