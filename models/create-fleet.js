@@ -23,5 +23,5 @@ module.exports = {
       required: ['x', 'y']
     }
   },
-  required: ['token', 'planetId', 'shipIds', 'pos']
+  required: ['token', 'shipIds', 'pos']
 }

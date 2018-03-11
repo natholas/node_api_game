@@ -8,10 +8,16 @@ module.exports = function (req, res) {
     fleetId = row.insertId
   })
   .on('end', function() {
-    sql.query('UPDATE ship SET fleet_id = ?, planetId = null WHERE ship_id IN (?) AND pos_x = ? AND pos_y = ?)',
-    [fleetId, body.req.shipIds, req.body.pos_x, req.body.pos_y])
+    var response
+    sql.query('UPDATE ship SET fleet_id = ?, planet_id = null WHERE ship_id IN (?) AND pos_x = ? AND pos_y = ? AND owner_id = ?',
+    [fleetId, req.body.shipIds, req.body.pos.x, req.body.pos.y, req.user.id])
+    .on('result', function(row) {
+      response = row
+    })
     .on('end', function() {
-      return result({ error: false })
+      console.log(response);
+      if (response.affectedRows == 0) return res({ error: 'NO_SHIPS_FOUND' })
+      return res({ error: false })
     })
   })
 }
