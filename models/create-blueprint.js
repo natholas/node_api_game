@@ -12,7 +12,6 @@ module.exports = {
     researchIds: {
       type: 'array',
       minItems: 1,
-      maxItems: 4,
       items: {
         type: 'number'
       }

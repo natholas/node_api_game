@@ -25,9 +25,18 @@ module.exports = function () {
     WHERE status = 'IN_PROGRESS'
     AND percent >= 100;
 
+    UPDATE ship
+    SET status = 'DONE'
+    WHERE status = 'IN_PROGRESS'
+    AND build_points >= total_build_points;
+
     UPDATE research RE, celestial_facilities CF
     SET RE.percent = RE.percent + CF.research_level
     WHERE RE.planet_id = CF.planet_id AND RE.status = 'IN_PROGRESS';
+
+    UPDATE ship SH, celestial_facilities CF
+    SET SH.build_points = SH.build_points + CF.production_level
+    WHERE SH.planet_id = CF.planet_id AND SH.status = 'IN_PROGRESS';
   `)
 
   var affectInsertQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '

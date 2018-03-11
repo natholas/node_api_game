@@ -22,8 +22,8 @@ module.exports = function (req, res) {
     var blueprintId = null
     var researchIds = []
     for (let row of rows) if (researchIds.indexOf(row.research_id) < 0) researchIds.push(row.research_id)
-    sql.query('INSERT INTO blueprint (owner_id, blueprint_name, mineral_cost, metal_cost, time_cost) VALUES (?,?,?,?,?)',
-    [req.user.id, req.body.name, template.baseCosts.mineral, template.baseCosts.metal, template.baseCosts.time])
+    sql.query('INSERT INTO blueprint (owner_id, blueprint_name, mineral_cost, metal_cost, production_cost, blueprint_type) VALUES (?,?,?,?,?, ?)',
+    [req.user.id, req.body.name, template.baseCosts.mineral, template.baseCosts.metal, template.baseCosts.production, req.body.type])
     .on('result', function(row) {
       blueprintId = row.insertId
     })
@@ -36,7 +36,5 @@ module.exports = function (req, res) {
         return res({ error: false, template: template })
       })
     })
-
-    
   })
 }

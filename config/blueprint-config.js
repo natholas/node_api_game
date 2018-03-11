@@ -9,7 +9,7 @@ module.exports = {
     baseCosts: {
       metal: 100,
       mineral: 60,
-      time: 100
+      production: 100
     }
   },
   cruiser: {
@@ -21,7 +21,7 @@ module.exports = {
     baseCosts: {
       metal: 300,
       mineral: 220,
-      time: 400
+      production: 400
     }
   },
   frigate: {},

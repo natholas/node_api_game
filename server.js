@@ -28,7 +28,7 @@ app.post('/*', function (req, res) {
   var url = req.url.substring(1)
   if (!api[url]) res.send({ error: 'API_NOT_FOUND' })
   var validation = validate(req.body, api[url].schema)
-  if (validation.errors.length) res.send(validation.errors)
+  if (validation.errors.length) return res.send(validation.errors)
   if (req.body.token) {
     try {
       req.user = jwt.verify(req.body.token, env.jwtSecret);
