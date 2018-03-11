@@ -9,4 +9,5 @@ module.exports = [
   'build-ships',
   'create-fleet',
   'land-fleet',
+  'merge-fleets',
 ]

@@ -3,7 +3,7 @@ const sql = require('../connection')
 module.exports = function (req, res) {
   var rows = []
   var fleetId = null;
-  sql.query('INSERT INTO fleet (pos_x, pos_y) VALUES (?,?)', [req.body.pos_x, req.body.pos_y])
+  sql.query('INSERT INTO fleet (pos_x, pos_y, owner_id) VALUES (?,?,?)', [req.body.pos.x, req.body.pos.y, req.user.id])
   .on('result', function(row) {
     fleetId = row.insertId
   })
