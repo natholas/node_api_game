@@ -6,6 +6,7 @@ module.exports = [
   'upgrade-facility',
   'start-research',
   'create-blueprint',
-  'create-fleet',
   'build-ships',
+  'create-fleet',
+  'land-fleet',
 ]
