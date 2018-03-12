@@ -30,13 +30,13 @@ module.exports = function () {
     WHERE status = 'IN_PROGRESS'
     AND build_points >= total_build_points;
 
-    UPDATE research RE, celestial_facilities CF
-    SET RE.percent = RE.percent + CF.research_level
-    WHERE RE.planet_id = CF.planet_id AND RE.status = 'IN_PROGRESS';
+    update research
+    join research_planet on research_planet.research_id = research.research_id
+    SET research.percent = research.percent + research_planet.research_level;
 
-    UPDATE ship SH, celestial_facilities CF
-    SET SH.build_points = SH.build_points + CF.production_level
-    WHERE SH.planet_id = CF.planet_id AND SH.status = 'IN_PROGRESS';
+    update ship
+    join production_planet on production_planet.ship_id = ship.ship_id
+    SET ship.build_points = ship.build_points + production_planet.production_level;
   `)
 
   var affectInsertQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '

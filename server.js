@@ -31,7 +31,7 @@ app.post('/*', function (req, res) {
   if (validation.errors.length) return res.send(validation.errors)
   if (req.body.token) {
     try {
-      req.user = jwt.verify(req.body.token, env.jwtSecret);
+      req.user = jwt.verify(req.body.token, env.jwtSecret)
     } catch(err) {
       return res.send({ error: 'TOKEN_NOT_VALID' })
     }
