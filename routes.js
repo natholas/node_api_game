@@ -11,5 +11,5 @@ module.exports = [
   'land-fleet',
   'merge-fleets',
   'split-fleet',
-  'generate-stars',
+  'generate-celestials',
 ]

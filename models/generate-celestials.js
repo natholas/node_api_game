@@ -5,19 +5,23 @@ module.exports = {
     },
     xRange: {
       type: 'array',
-      items: 'number',
+      items: {
+        type: 'number'
+      },
       minItems: 2,
       maxItems: 2,
     },
     yRange: {
       type: 'array',
-      items: 'number',
+      items: {
+        type: 'number'
+      },
       minItems: 2,
       maxItems: 2,
     },
-    numberOfStars: {
+    starCount: {
       type: 'number'
     }
   },
-  required: ['token', 'xRange', 'yRange', 'numberOfStars']
+  required: ['token', 'xRange', 'yRange', 'starCount']
 }
