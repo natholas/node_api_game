@@ -37,6 +37,14 @@ module.exports = function () {
     update ship
     join production_planet on production_planet.ship_id = ship.ship_id
     SET ship.build_points = ship.build_points + production_planet.production_level;
+
+    UPDATE fleet
+    SET pos_x = target_pos_x, pos_y = target_pos_y, mission = 'IDLE'
+    WHERE mission != 'IDLE' AND ABS(pos_x - target_pos_x) < ABS(speed_x);
+
+    UPDATE fleet
+    SET pos_x = pos_x + speed_x, pos_y = pos_y + speed_y
+    WHERE MISSION != 'IDLE';
   `)
 
   var affectInsertQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '
