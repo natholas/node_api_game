@@ -14,12 +14,12 @@ module.exports = (req, res) => {
     sql.query('SELECT * FROM fleet WHERE fleet_id = ?', [req.body.fleetId])
     .on('result', (row) => fleet = row)
     .on('end', () => {
-      
       let diff = posDiff({ x: fleet.pos_x, y: fleet.pos_y }, req.body.targetPos)
+
+      console.log(diff);
+      
       let dir = normalizeVec(diff, 1)
 
-      console.log(dir)
-      
       let speed = {
         x: Math.round(ship.speed * dir.x),
         y: Math.round(ship.speed * dir.y)

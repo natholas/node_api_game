@@ -39,7 +39,7 @@ module.exports = function () {
     SET ship.build_points = ship.build_points + production_planet.production_level;
 
     UPDATE fleet
-    SET pos_x = target_pos_x, pos_y = target_pos_y, mission = 'IDLE'
+    SET pos_x = target_pos_x, pos_y = target_pos_y, speed_x = 0, speed_y = 0
     WHERE mission != 'IDLE' AND ABS(pos_x - target_pos_x) < ABS(speed_x);
 
     UPDATE fleet
@@ -47,7 +47,7 @@ module.exports = function () {
     WHERE MISSION != 'IDLE';
   `)
 
-  var affectInsertQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '
+  var researchQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '
   sql.query("SELECT * FROM research WHERE status = 'IN_PROGRESS' AND percent >= 100")
   .on('result', function(research) {
     let effects = []
@@ -68,15 +68,24 @@ module.exports = function () {
     }
 
     for (var effect of effects) {
-      affectInsertQuery += '('
-      affectInsertQuery += effect.id + ', "' + effect.type + '", ' + effect.amount
-      affectInsertQuery += '),'
+      researchQuery += '('
+      researchQuery += effect.id + ', "' + effect.type + '", ' + effect.amount
+      researchQuery += '),'
     }
   })
   .on('end', function() {
-    affectInsertQuery = affectInsertQuery.substring(0, affectInsertQuery.length - 1)
-    if (affectInsertQuery.length > 62) {
-      sql.query(affectInsertQuery)
+    researchQuery = researchQuery.substring(0, researchQuery.length - 1)
+    if (researchQuery.length > 62) {
+      sql.query(researchQuery)
     }
+  })
+
+  var fleetQuery = ''
+  sql.query('SELECT * FROM fleet WHERE mission != "IDLE" AND speed_x = 0 AND speed_y = 0')
+  .on('result', (fleet) => {
+    console.log(fleet)
+  })
+  .on('end', () => {
+    console.log(fleetQuery);
   })
 }

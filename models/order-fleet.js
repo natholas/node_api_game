@@ -19,7 +19,7 @@ module.exports = {
       required: ['x', 'y']
     },
     mission: {
-      enum: ['attack', 'move', 'colonise']
+      enum: ['attack', 'move', 'colonize']
     }
   },
   required: ['token', 'fleetId', 'targetPos', 'mission']
