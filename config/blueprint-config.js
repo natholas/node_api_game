@@ -2,7 +2,7 @@ module.exports = {
   researchCostMultiplier: 1.2,
   corvette: {
     baseStats: {
-      speed: 2,
+      speed: 200,
       damage: 1,
       health: 1
     },
@@ -14,7 +14,7 @@ module.exports = {
   },
   cruiser: {
     baseStats: {
-      speed: 1,
+      speed: 100,
       damage: 3,
       health: 3
     },

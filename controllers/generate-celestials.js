@@ -9,8 +9,8 @@ module.exports = (req, res) => {
   let string = 'INSERT INTO celestial (pos_x, pos_y, type) VALUES '
 
   for (let i = 0; i < req.body.starCount; i++) {
-    let pos_x = (Math.random() * req.body.xRange[1]) + req.body.xRange[0]
-    let pos_y = (Math.random() * req.body.yRange[1]) + req.body.yRange[0]
+    let pos_x = Math.round((Math.random() * req.body.xRange[1]) + req.body.xRange[0])
+    let pos_y = Math.round((Math.random() * req.body.yRange[1]) + req.body.yRange[0])
     string += '(' + pos_x + ',' + pos_y + ', "star"),'
     let planetCount = randomInt(celestialConfig.minPlanetCount, celestialConfig.maxPlanetCount)
     for (let i = 0; i < planetCount; i++) {

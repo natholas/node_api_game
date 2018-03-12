@@ -2,6 +2,7 @@ const sql = require('../connection')
 
 module.exports = function (req, res) {
   var rows = []
+  
   sql.query('SELECT * FROM ship WHERE ship_id IN (?) AND pos_x = ? AND pos_y = ? AND owner_id = ? AND fleet_id IS NULL', [req.body.shipIds, req.body.pos.x, req.body.pos.y, req.user.id])
   .on('result', (row) => {
     rows.push(row)

@@ -18,7 +18,7 @@ module.exports = function (req, res) {
       .on('end', function() {
         var planetId
         sql.query('SELECT * FROM celestial WHERE owner_id = ?', [playerId])
-        .on('result', (row) => planetId = row.insertId)
+        .on('result', (row) => planetId = row.celestial_id)
         .on('end', () => {
           sql.query('INSERT into celestial_facilities (planet_id) VALUES (?)', [planetId])
           .on('end', () => {
