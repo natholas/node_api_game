@@ -9,19 +9,7 @@ module.exports = {
         type: 'number'
       },
       minItems: 2
-    },
-    pos: {
-      type: 'object',
-      properties: {
-        x: {
-          type: 'number'
-        },
-        y: { 
-          type: 'number'
-        }
-      },
-      required: ['x', 'y']
     }
   },
-  required: ['token', 'fleetIds', 'pos']
+  required: ['token', 'fleetIds']
 }

@@ -4,7 +4,7 @@ module.exports = {
       type: 'string'
     },
     type: {
-      enum: ['corvette', 'cruiser', 'frigate', 'battleShip']
+      enum: ['corvette', 'cruiser', 'frigate', 'battleShip', 'colonyShip']
     },
     name: {
       type: 'string'

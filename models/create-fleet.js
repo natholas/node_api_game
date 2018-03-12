@@ -10,18 +10,9 @@ module.exports = {
       },
       minItems: 1
     },
-    pos: {
-      type: 'object',
-      properties: {
-        x: {
-          type: 'number'
-        },
-        y: {
-          type: 'number'
-        }
-      },
-      required: ['x', 'y']
+    planetId: {
+      type: 'number'
     }
   },
-  required: ['token', 'shipIds', 'pos']
+  required: ['token', 'shipIds']
 }

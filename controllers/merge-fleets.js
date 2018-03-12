@@ -10,10 +10,10 @@ module.exports = function(req, res) {
   .on('end', function() {
     if (!result) return res({ error: 'INVALID_FLEET_ID' })
     sql.query('UPDATE ship SET fleet_id = ? WHERE fleet_id IN (?) AND owner_id = ? AND pos_x = ? AND pos_y = ?',
-    [req.body.fleetIds[0], req.body.fleetIds, req.user.id, req.body.pos.x, req.body.pos.y])
+    [req.body.fleetIds[0], req.body.fleetIds, req.user.id, result.pos_x, result.pos_y])
     .on('end', () => {
       sql.query('DELETE FROM fleet WHERE fleet_id IN (?) AND owner_id = ? AND pos_x = ? AND pos_y = ?',
-      [req.body.fleetIds, req.user.id, req.body.pos.x, req.body.pos.y])
+      [req.body.fleetIds, req.user.id, result.pos_x, result.pos_y])
       return res({ error: false })
     })
   })

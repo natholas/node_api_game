@@ -24,6 +24,18 @@ module.exports = {
       production: 400
     }
   },
+  colonyShip: {
+    baseStats: {
+      speed: 100,
+      damage: 0,
+      health: 5
+    },
+    baseCosts: {
+      metal: 300,
+      mineral: 220,
+      production: 400
+    }
+  },
   frigate: {},
   battleShip: {}
 }
