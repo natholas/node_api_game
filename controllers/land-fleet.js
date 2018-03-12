@@ -7,17 +7,23 @@ module.exports = function (req, res) {
     planet = row
   })
   .on('result', function() {
-    var result = null
     if (!planet) return res({ error: 'INVALID_PLANET_ID' })
-    sql.query('UPDATE ship SET fleet_id = null, planet_id = ? WHERE fleet_id = ? AND owner_id = ? AND pos_x = ? AND pos_y = ?',
-    [planet.celestial_id, req.body.fleetId, req.user.id, planet.pos_x, planet.pos_y])
-    .on('result', function (row) {
-      result = row
-    })
-    .on('end', function () {
-      if (!result || result.affectedRows == 0) return res({ error: 'COULD_NOT_LAND' })
-      sql.query('DELETE FROM fleet WHERE fleet_id = ?', [req.body.fleetId])
-      return res({ error: false })
+    var fleet
+    sql.query('SELECT * FROM fleet WHERE pos_x = ? AND pos_y = ? AND owner_id = ?', [planet.pos_x, planet.pos_y, req.user.id])
+    .on('result', (row) => fleet = row)
+    .on('end', () => {
+      if (!fleet) return res({ error: 'COULD_NOT_LAND' })
+      var result = null
+      sql.query('UPDATE ship SET fleet_id = null, planet_id = ? WHERE fleet_id = ? AND owner_id = ?',
+      [planet.celestial_id, req.body.fleetId, req.user.id])
+      .on('result', function (row) {
+        result = row
+      })
+      .on('end', function () {
+        if (!result || result.affectedRows == 0) return res({ error: 'COULD_NOT_LAND' })
+        sql.query('DELETE FROM fleet WHERE fleet_id = ?', [req.body.fleetId])
+        return res({ error: false })
+      })
     })
   })
 }
