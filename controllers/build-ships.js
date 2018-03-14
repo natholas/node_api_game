@@ -44,11 +44,11 @@ module.exports = function (req, res) {
         let params = []
         let string = ''
         for (let i = 0; i < req.body.count; i++) {
-          params.push(req.user.id, planet.celestial_id, blueprint.blueprint_id, planet.pos_x, planet.pos_y, health, damage, speed, blueprint.production_cost)
-          string += '(?,?,?,?,?,?,?,?,?),'
+          params.push(req.user.id, planet.celestial_id, blueprint.blueprint_id, health, damage, speed, blueprint.production_cost)
+          string += '(?,?,?,?,?,?,?),'
         }
         string = string.substring(0,string.length - 1)
-        sql.query('INSERT INTO ship (owner_id, planet_id, blueprint_id, pos_x, pos_y, health, damage, speed, total_build_points) VALUES ' + string,
+        sql.query('INSERT INTO ship (owner_id, planet_id, blueprint_id, health, damage, speed, total_build_points) VALUES ' + string,
         params)
         .on('end', function() {
           return res({ error: false })

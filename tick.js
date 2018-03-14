@@ -4,6 +4,10 @@ const randomInt = require('./functions/random-int')
 
 module.exports = function () {
   sql.query(`
+    DELETE FROM ship WHERE status = 'DELETE';
+
+    DELETE fleet FROM fleet LEFT JOIN ship ON ship.fleet_id = fleet.fleet_id WHERE ship_id IS NULL;
+
     UPDATE celestial_facilities
     SET mineral_storage = mineral_storage + (mineral_level * 4)
     WHERE energy_level >= mineral_level;
@@ -39,12 +43,16 @@ module.exports = function () {
     SET ship.build_points = ship.build_points + production_planet.production_level;
 
     UPDATE fleet
-    SET pos_x = target_pos_x, pos_y = target_pos_y, speed_x = 0, speed_y = 0
+    SET pos_x = target_pos_x, pos_y = target_pos_y, speed_x = 0, speed_y = 0, target_pos_x = null, target_pos_y = null
     WHERE mission != 'IDLE' AND ABS(pos_x - target_pos_x) < ABS(speed_x);
 
     UPDATE fleet
     SET pos_x = pos_x + speed_x, pos_y = pos_y + speed_y
-    WHERE MISSION != 'IDLE';
+    WHERE MISSION != 'IDLE' AND target_pos_x IS NOT NULL AND target_pos_y IS NOT NULL;
+
+    DELETE fleet FROM fleet
+    LEFT JOIN ship ON ship.fleet_id = fleet.fleet_id
+    WHERE ship_id IS NULL;
   `)
 
   var researchQuery = 'INSERT INTO research_effect (research_id, type, amount) VALUES '
@@ -83,9 +91,22 @@ module.exports = function () {
   var fleetQuery = ''
   sql.query('SELECT * FROM fleet WHERE mission != "IDLE" AND speed_x = 0 AND speed_y = 0')
   .on('result', (fleet) => {
-    console.log(fleet)
+    // console.log(fleet)
+    if (fleet.mission == 'COLONIZE') {
+      fleetQuery += `
+      UPDATE celestial
+      JOIN colony_ship ON colony_ship.celestial_id = celestial.celestial_id
+      JOIN ship ON colony_ship.ship_id = ship.ship_id
+      SET celestial.owner_id = colony_ship.fleet_owner,
+      ship.status = 'DELETE',
+      ship.fleet_id = NULL,
+      ship.owner_id = NULL
+      WHERE colony_ship.fleet_id = ` + fleet.fleet_id + `;`
+    }
   })
   .on('end', () => {
-    console.log(fleetQuery);
+    if (fleetQuery.length) {
+      sql.query(fleetQuery)
+    }
   })
 }
