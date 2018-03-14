@@ -4,10 +4,6 @@ const randomInt = require('./functions/random-int')
 
 module.exports = function () {
   sql.query(`
-    DELETE FROM ship WHERE status = 'DELETE';
-
-    DELETE fleet FROM fleet LEFT JOIN ship ON ship.fleet_id = fleet.fleet_id WHERE ship_id IS NULL;
-
     UPDATE celestial_facilities
     SET mineral_storage = mineral_storage + (mineral_level * 4)
     WHERE energy_level >= mineral_level;
@@ -105,8 +101,8 @@ module.exports = function () {
     }
   })
   .on('end', () => {
-    if (fleetQuery.length) {
-      sql.query(fleetQuery)
-    }
+    fleetQuery += `DELETE FROM ship WHERE status = 'DELETE';
+    DELETE fleet FROM fleet LEFT JOIN ship ON ship.fleet_id = fleet.fleet_id WHERE ship_id IS NULL;`
+    sql.query(fleetQuery)
   })
 }
